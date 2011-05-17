@@ -7,9 +7,9 @@ set nocompatible
 "Scheme
 
 " set gfn=Courier\ New
-" set gfn=Anonymous\ Pro:h10
+set gfn=Anonymous\ Pro:h12
 if has("gui_running")
-	colorscheme desert
+	colorscheme molokai 
 	set guioptions-=T	"no toolbar
     set columns=250
     set lines=80
@@ -73,6 +73,8 @@ set wildmenu
 let mapleader = ','
 let g:mapleader = ','
 
+cd $HOME/Sites
+
 """""""""""""""""""""""""""""
 " Status bar
 """""""""""""""""""""""""""""
@@ -124,6 +126,7 @@ nmap <s-tab> :bp<cr>
 if has("mac")
     nmap <cmd-w> :bd<cr>
 endif
+nnoremap <leader>g :GundoToggle<CR>
 
 """""""""""""""""""""""""""""
 " Plugin
@@ -139,12 +142,6 @@ endif
     """""""""""""""""""""""""
     nmap <silent> <leader>e :NERDTreeToggle<cr>
 
-
-    """""""""""""""""""""""""
-    " pydiction 
-    """""""""""""""""""""""""
-    let g:pydiction_location = '~/.vim/ftplugin/complete-dict'
-    
     """""""""""""""""""""""""
     " BufExplorer
     """""""""""""""""""""""""
@@ -152,3 +149,9 @@ endif
     let g:bufExplorerShowRelativePath=1  " Show relative paths.
     let g:bufExplorerSortBy='name'       " Sort by the buffer's name.
     let g:bufExplorerSplitRight=1        " Split right.    
+
+
+    """""""""""""""""""""""""
+    " pathogen
+    """""""""""""""""""""""""
+    call pathogen#runtime_append_all_bundles()
