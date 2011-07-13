@@ -116,10 +116,6 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 
-" detects when you stype a colon(:) followed by a RETURN(<CR>)
-" then adds a <TAB> keypress to the end
-im :<CR> :<CR><TAB>
-
 set encoding=utf-8
 set fileencodings=utf-8
 
