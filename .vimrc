@@ -7,9 +7,17 @@ set nocompatible
 "Scheme
 
 " set gfn=Courier\ New
-set gfn=Anonymous\ Pro:h12
+if has("gui_gtk2")
+    set gfn=Anonymous\ Pro\ 11
+elseif has("gui_macvim")
+    set gfn=Anonymous\ Pro:h12
+elseif has("gui_win32")
+    set gfn=Anonymous\ Pro:h12
+end
+" set gfn=Anonymous\ Pro:h12
 if has("gui_running")
-	colorscheme molokai 
+	" colorscheme molokai 
+	colorscheme wombat 
 	set guioptions-=T	"no toolbar
     set columns=250
     set lines=80
@@ -92,6 +100,10 @@ set shiftwidth=4
 set tabstop=4
 set smarttab
 set expandtab
+set softtabstop=4
+
+
+" reference: http://py.vaults.ca/~x/python_and_vim.html
 
 " remove any extra whitespace from the ends of lines
 " autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
@@ -104,6 +116,10 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 
+" detects when you stype a colon(:) followed by a RETURN(<CR>)
+" then adds a <TAB> keypress to the end
+im :<CR> :<CR><TAB>
+
 set encoding=utf-8
 set fileencodings=utf-8
 
@@ -113,6 +129,8 @@ set formatoptions=tcrqn
 set ai
 " smart indent
 set si
+
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 "The commandbar is 2 high
 set cmdheight=2
@@ -155,3 +173,17 @@ nnoremap <leader>g :GundoToggle<CR>
     " pathogen
     """""""""""""""""""""""""
     call pathogen#runtime_append_all_bundles()
+
+    """""""""""""""""""""""""
+    " pyflakes 
+    """""""""""""""""""""""""
+    if has("gui_running")
+        highlight SpellBad term=underline gui=undercurl guisp=Orange
+    endif
+
+    """""""""""""""""""""""""
+    " snipmate_for_django
+    " https://github.com/robhudson/snipmate_for_django
+    """""""""""""""""""""""""
+    "autocmd FileType python set ft=python.django
+    autocmd FileType html set ft=htmldjango.html
