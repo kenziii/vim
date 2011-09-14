@@ -6,18 +6,17 @@ set nocompatible
 "Font
 "Scheme
 
-" set gfn=Courier\ New
 if has("gui_gtk2")
     set gfn=Anonymous\ Pro\ 11
 elseif has("gui_macvim")
-    set gfn=Anonymous\ Pro:h12
+    set gfn=Monaco:h12
 elseif has("gui_win32")
     set gfn=Anonymous\ Pro:h12
 end
 " set gfn=Anonymous\ Pro:h12
 if has("gui_running")
 	" colorscheme molokai 
-	colorscheme wombat 
+	colorscheme zenburn 
 	set guioptions-=T	"no toolbar
     set columns=250
     set lines=80
@@ -147,6 +146,11 @@ nnoremap <leader>g :GundoToggle<CR>
 """""""""""""""""""""""""""""
 
     """""""""""""""""""""""""
+    " pathogen
+    """""""""""""""""""""""""
+    call pathogen#runtime_append_all_bundles()
+    
+    """""""""""""""""""""""""
     " snipMate
     """""""""""""""""""""""""
     let g:snips_author = 'Jie Ma'
@@ -164,22 +168,43 @@ nnoremap <leader>g :GundoToggle<CR>
     let g:bufExplorerSortBy='name'       " Sort by the buffer's name.
     let g:bufExplorerSplitRight=1        " Split right.    
 
-
-    """""""""""""""""""""""""
-    " pathogen
-    """""""""""""""""""""""""
-    call pathogen#runtime_append_all_bundles()
-
-    """""""""""""""""""""""""
-    " pyflakes 
-    """""""""""""""""""""""""
-    if has("gui_running")
-        highlight SpellBad term=underline gui=undercurl guisp=Orange
-    endif
-
     """""""""""""""""""""""""
     " snipmate_for_django
     " https://github.com/robhudson/snipmate_for_django
     """""""""""""""""""""""""
     "autocmd FileType python set ft=python.django
-    autocmd FileType html set ft=htmldjango.html
+    "autocmd FileType html set ft=htmldjango.html
+    
+    " https://github.com/jceb/vimrc
+    " ------------------------------------------------------------
+    " FuzzyFinder:
+    " expand the current filenames directory or use the current working directory
+    function! Expand_file_directory()
+        let dir = expand('%:~:.:h')
+        if dir == ''
+            let dir = getcwd()
+        endif
+        let dir .= '/'
+        return dir
+    endfunction
+
+    "nnoremap <leader>fh :FufHelp<CR>
+    "nnoremap <leader>fb :FufBuffer<CR>
+    nnoremap <leader>fr :FufMruFile<CR>
+    nnoremap <leader>fd :FufDir<CR>
+    nnoremap <leader>fD :FufDir <C-r>=Expand_file_directory()<CR><CR>
+    nmap <leader>Fd <leader>fD
+    nmap <leader>FD <leader>fD
+    nnoremap <leader>ff :FufFile<CR>
+    nnoremap <leader>fF :FufFile <C-r>=Expand_file_directory()<CR><CR>
+    nmap <leader>FF <leader>fF
+    nnoremap <leader>fR :FufRenewCache<CR>
+    let g:fuf_modesDisable = [ 'buffer', 'help', 'bookmark', 'tag', 'taggedfile', 'quickfix', 'mrucmd', 'jumplist', 'changelist', 'line' ]
+    let g:fuf_scratch_location  = 'botright'
+    let g:fuf_maxMenuWidth = 300
+    let g:fuf_file_exclude = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.[/\\]$)|\.pyo|\.pyc|autom4te\.cache|blib|_build|\.bzr|\.cdv|cover_db|CVS|_darcs|\~\.dep|\~\.dot|\.git|\.hg|\~\.nib|\.pc|\~\.plst|RCS|SCCS|_sgbak|\.svn'
+    let g:fuf_previewHeight = 0
+
+    " ------------------------------------------------------------
+    " Gundo:
+    nmap <leader>u :GundoToggle<CR>
